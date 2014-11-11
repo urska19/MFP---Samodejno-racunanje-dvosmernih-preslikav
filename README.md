@@ -8,7 +8,7 @@ ___
 
 **Načrt:**
 
-- napisati osnovni del do začetka decembra
+- napisati osnovni del + kakšno testno datoteko do začetka decembra
 - sestanek s profesorjem konec novembra/začetek decembra
 - možne izboljšave v decembru
 - predstavitev 15.1.2015
