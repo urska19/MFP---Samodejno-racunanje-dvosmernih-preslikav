@@ -15,7 +15,6 @@ import Control.Monad.State (State, runState)
 import qualified Control.Monad.State as State (get, put)
 import Control.Applicative
 import Control.Functor.Combinators.Lift
---import Lift
 import Data.Set (Set)
 import qualified Data.Set as Set (toAscList, singleton)
 import Data.Traversable
@@ -26,8 +25,6 @@ import Data.Foldable
 import Data.List 
 
 bff :: (Traversable k, Zippable k', Foldable k') => (forall a. k a -> k' a) -> (forall a. Eq a => k a -> k' a -> k a)	
---bff :: Traversable k => (forall a. k a -> [a]) -> (forall a. Eq a => k a -> [a] -> k a)
---bff :: (forall a. [a] -> [a]) -> (forall a. Eq a => [a] -> [a] -> [a])
 bff get = \s v ->
   let (s', g) = template s
       h = either error id (assoc (get s') v)
@@ -54,13 +51,6 @@ makeAssoc checkInsert empty s'' v =
                 (either Left . uncurry checkInsert) 
                 (Right empty) 
 
-                
-{-	      
-assoc :: Eq a => [Int] -> [a] -> Either String (IntMap a)
-assoc [] [] = Right IntMap.empty
-assoc (x:xs) (y:ys) = either Left (Bff.checkInsert x y)(assoc xs ys) 
-assoc _ _ = Left "Update changes the length."
--}
 checkInsert :: Eq a => Int -> a -> IntMap a -> Either String (IntMap a)
 checkInsert x y m = case IntMap.lookup x m of
 			 Nothing -> Right (IntMap.insert x y m)
@@ -68,15 +58,7 @@ checkInsert x y m = case IntMap.lookup x m of
 				      then Right m 
 				      else Left "Update violates equality."
 							      
-{-		      
-template_Eq :: Eq a => [a] -> ([Int], IntMapEq a)
-template_Eq s = case runState (go s) (IntMapEq.empty,0)
-		  of (s',(g,_)) -> (s',g)
-	where go [] = return []
-	      go (x:xs) = do i <- number_Eq x
-			     is <- go xs
-			     return (i:is)
-			     -}
+
 template_Eq :: (Traversable k, Eq a) => k a -> (k Int, IntMapEq a)
 template_Eq s = case runState (go s) (IntMapEq.empty,0)
 		  of (s',(g,_)) -> (s',g)
@@ -90,18 +72,10 @@ number_Eq a = do (m,i) <- State.get
 				 State.put (m',i+1)
 				 return i
 
-{-				 
-assoc_Eq :: Eq a => [Int] -> [a] -> Either String (IntMapEq a)
-assoc_Eq [] [] = Right IntMapEq.empty
-assoc_Eq (x:xs) (y:ys) = either Left (IntMapEq.checkInsert x y) (assoc_Eq xs ys)
-assoc_Eq _ _ = Left "Update changes the length."
-  -}
-
 assoc_Eq :: (Zippable k, Foldable k, Eq a) => k Int -> k a -> Either String (IntMapEq a)
 assoc_Eq = makeAssoc IntMapEq.checkInsert IntMapEq.empty
   
-bff_Eq :: Traversable k => (forall a. Eq a => k a -> [a]) -> (forall a. Eq a => k a -> [a] -> k a)
---bff_Eq :: (forall a. Eq a => [a] -> [a]) -> (forall a. Eq a => [a] -> [a] -> [a])
+bff_Eq :: (Traversable k, Zippable k', Foldable k') => (forall a. Eq a => k a -> k' a) -> (forall a. Eq a => k a -> k' a -> k a)
 bff_Eq get = \s v ->
    let (s',g) = template_Eq s
        h = either error id (assoc_Eq(get s') v)
@@ -128,19 +102,10 @@ template_Ord s = case traverse number_Ord s of
 number_Ord :: Ord a => a -> Lift(,)(Const(Set a))((->)(IntMapOrd a)) Int 
 number_Ord a = Lift (Const(Set.singleton a), fromJust . IntMapOrd.lookupR a)
 
-{-
-assoc_Ord :: Ord a => [Int] -> [a] -> Either String (IntMapOrd a)
-assoc_Ord [] [] = Right IntMapOrd.empty
-assoc_Ord (x:xs) (y:ys) = either Left (IntMapOrd.checkInsert x y) (assoc_Ord xs ys)
-assoc_Ord _ _ = Left "Update changes the length."
-  -}
-
 assoc_Ord :: (Zippable k, Foldable k, Ord a) => k Int -> k a -> Either String (IntMapOrd a)
 assoc_Ord = makeAssoc IntMapOrd.checkInsert IntMapOrd.empty
 
-
---bff_Ord :: (forall a. Ord a => [a] -> [a]) -> (forall a. Ord a => [a] -> [a] -> [a])
-bff_Ord :: Traversable k => (forall a. Ord a => k a -> [a]) -> (forall a. Ord a => k a -> [a] -> k a)
+bff_Ord :: (Traversable k, Zippable k', Foldable k') => (forall a. Ord a => k a -> k' a) -> (forall a. Ord a => k a -> k' a -> k a)
 bff_Ord get = \s v ->
    let (s',g) = template_Ord s
        h = either error id (assoc_Ord(get s') v)
@@ -169,9 +134,6 @@ instance Zippable Tree where
 -- ###
 -- ---------------
 
-
-
-
 --za primere
 data Tree a = Leaf a | Node (Tree a) (Tree a)
 
@@ -183,7 +145,6 @@ flatten (Node t1 t2 ) = flatten t1 ++ flatten t2
 --traverse f (Leaf a) = pure Leaf <*> f a
 --traverse f (Node t1 t2 ) = pure Node <*> traverse f t1
 --				      <*> traverse f t2
-
 
 
 top3 :: Ord a => [a] -> [a]
