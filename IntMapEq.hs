@@ -1,5 +1,6 @@
 module IntMapEq
-	(empty, 
+	(IntMapEq,
+	empty, 
 	insert, 
 	checkInsert, 
 	union, 
