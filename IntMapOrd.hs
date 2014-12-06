@@ -1,5 +1,6 @@
 module IntMapOrd
-	(fromAscPairList,
+	(IntMapOrd,
+	fromAscPairList,
 	empty, 
 	insert,
 	checkInsert, 
