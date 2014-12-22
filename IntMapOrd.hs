@@ -78,10 +78,12 @@ union (IntMapOrd map1) (IntMapOrd map2) =
 	let 
 		s1 = Map.filterWithKey (\key _ -> Map.notMember key map1) (map2)
 		s2 = Map.foldr (\value init -> (notMemberR value (IntMapOrd map1)) && init) True s1
+		s3 = IntMapOrd (Map.union map1 s1)
 	in
-		if s2 
-		then Right (IntMapOrd (Map.union map1 s1))
-		else Left "Vrednosti pri razlicnih kljucih so enake"
+		if s2 && (valid s3) && (validR s3)
+		then Right s3
+		else Left "Update violates order"
+		
 		
 notMemberR :: Ord b => b -> IntMapOrd b -> Bool
 notMemberR value map = case lookupR value map of
