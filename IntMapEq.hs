@@ -39,14 +39,14 @@ checkInsert key value map =
 								   else Left "Update violates equality"
 
 union :: Eq a => IntMapEq a -> IntMapEq a -> Either String (IntMapEq a)
-union (IntMapEq map1) (IntMapEq map2) =  
-			let 
-				s3 = IntMap.filterWithKey (\key _ -> IntMap.notMember key map2) (map1)
-				s1 = IntMapEq s3
-				s2 = IntMapEq (IntMap.filter (\value -> notMemberR value (IntMapEq map2)) map1)
-		 	in if toList (s1) == toList (s2)
-			   then Right (IntMapEq (IntMap.union s3 map2))
-			   else Left "Equality error"
+union (IntMapEq map1) (IntMapEq map2) = 
+	let 
+		s1 = IntMap.filterWithKey (\key _ -> IntMap.notMember key map1) (map2)
+		s2 = IntMap.foldr (\value init -> (notMemberR value (IntMapEq map1)) && init) True s1
+	in
+		if s2 
+		then Right (IntMapEq (IntMap.union map1 s1))
+		else Left "Vrednosti pri razlicnih kljucih so enake"
 
 notMemberR :: Eq a => a -> IntMapEq a -> Bool
 notMemberR value map = case lookupR value map of

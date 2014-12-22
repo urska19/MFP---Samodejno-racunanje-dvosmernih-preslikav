@@ -76,12 +76,12 @@ checkInsert key value map =
 union :: Ord b => IntMapOrd b -> IntMapOrd b -> Either String (IntMapOrd b)
 union (IntMapOrd map1) (IntMapOrd map2) = 
 	let 
-		s3 = Map.filterWithKey (\key _ -> Map.notMember key map2) (map1)
-		s1 = IntMapOrd s3
-		s2 = IntMapOrd (Map.filter (\value -> notMemberR value (IntMapOrd map2)) map1)
-	in 	if toAscList (s1) == toAscList (s2)
-		then Right (IntMapOrd (Map.union s3 map2))
-		else Left "Equality error"
+		s1 = Map.filterWithKey (\key _ -> Map.notMember key map1) (map2)
+		s2 = Map.foldr (\value init -> (notMemberR value (IntMapOrd map1)) && init) True s1
+	in
+		if s2 
+		then Right (IntMapOrd (Map.union map1 s1))
+		else Left "Vrednosti pri razlicnih kljucih so enake"
 		
 notMemberR :: Ord b => b -> IntMapOrd b -> Bool
 notMemberR value map = case lookupR value map of
