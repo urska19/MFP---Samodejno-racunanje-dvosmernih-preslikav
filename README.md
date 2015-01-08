@@ -17,7 +17,7 @@ Poglejmo si naslednji primer
 halve :: [a] -> [a]
 halve x = take (length `div` 2) x
 ```
-in predpostavimo, da smo sliko na nek način posodobili in jo radi razširili v 
+in predpostavimo, da smo sliko na nek način posodobili in bi jo radi razširili v 
 v originalni vhodni seznam.
 To lahko naredimo z naslednjo funkcijo:
 ```
