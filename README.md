@@ -36,12 +36,17 @@ primerno *put* funckijo (npr. ```bff halve``` = ```put_1```).
 ekvivalentna, kar je z aplikacijskega vidika več kot dovolj.
 
 Dobro definiran par *get/put* funkcij mora zadoščati naslednjima pogojema:
-```put s (get s)``` = ```s```
-```get (put s v)``` = ```v```
+
+-```put s (get s)``` = ```s```
+
+-```get (put s v)``` = ```v```
 
 
 ___
 **Primerjava**
+
+Za par enostavnih *get* funkcij smo primerjali računsko zahtevnost avtomatsko zgeneriranih in na roke zapisanih *put* funkcij in rezultate narisali v obliki naslednjih grafov.
+
 ...
 
 ___
