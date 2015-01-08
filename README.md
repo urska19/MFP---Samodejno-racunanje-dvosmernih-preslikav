@@ -57,7 +57,7 @@ ___
 ___
 **Zahteva**
 
-Haskel
+Haskell
 
 ___
 **Kontakt**
