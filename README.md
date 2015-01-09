@@ -14,8 +14,8 @@ obema funkcijama.
 
 Poglejmo si naslednji primer
 ```
-halve :: [a] -> [a]
-halve x = take (length `div` 2) x
+polovicka :: [a] -> [a]
+polovicka x = take (length `div` 2) x
 ```
 in predpostavimo, da smo sliko na nek način posodobili in bi jo radi razširili v 
 v originalni vhodni seznam.
@@ -27,25 +27,53 @@ put_1 x x' | length x' == n
 	  where n = length x `div` 2
 ```
 
-Ker pisanje *put* funkcij ni ravno zabavno, se je porodila misel o avtomatizaciji.
-Ideja je napisati funkcijo *bff*, ki vzame *get* funckijo kot vhod in vrne 
-primerno *put* funckijo (npr. ```bff halve``` = ```put_1```).
+Ker pisanje *put* funkcij ni ravno zabavno, se je porodila misel o njihovi avtomatizaciji.
+Ideja je napisati funkcijo *bff*, ki vzame kot *get* funckijo kot vhod in vrne 
+primerno *put* funckijo (npr. ```bff polovicka``` ~ ```put_1```).
 
-```bff halve``` ne bo imela sinaktično enake definicije kot na roke napisana 
+```bff polovicka``` ne bo imela sintaktično enake definicije kot na roke napisana 
 ```put_1```. Imela bo zgolj enako fukcionalno vrednost, ki je semantično 
 ekvivalentna, kar je z aplikacijskega vidika več kot dovolj.
 
 Dobro definiran par *get/put* funkcij mora zadoščati naslednjima pogojema:
 
--```put s (get s)``` = ```s```
+- ```put s (get s)``` = ```s```
 
--```get (put s v)``` = ```v```
+- ```get (put s v)``` = ```v```
+
+
+**Delovanje *bff***
+
+Kako se lahko *bff* funkcija nauči kaj uporabnega iz vhodne *get* funkcije in 
+izkoriti pridobljene informacije za sproduciranje dobre *put* funkcije?
+
+Najprej omenimo, da mora biti *get* funkcija naj bo polimorfna, tako je njeno obnašanje odvisno le od 
+pozicije elementov in ne od njihove konkretne vrednosti.
+
+
+V grobem *bff* deluje na naslednji način
+(*bff* dobi za vhod get funkcijo, originalen izvor *s* in posodobljeno sliko *v*):
+
+- Vzame *s*, naredi predlogo *s' = [0..n]*, če *n = length(s)*, in asociacijo *g*, med 
+ustreznimi vrednostmi iz *s'* in *s*.
+
+- Zažene *get* na *s'*, dobi predlogo slike *v'* in sproducira asociacijo *h* med *v'* in *v*.
+
+- Združi asociaciji *g* in *h* v *h'*, kjer ima *h* prednost, ko je index predlog najden 
+v *h* in *g*. S tem zagotovimo, da se bomo zatekli k vrednosti iz *s*, ko neka 
+pozicija ne bo prišla v sliko in zato ni možnosti, da bi bila vrednost na tej poziciji spremenjena 
+s posodobitvijo.
+
+- Na koncu naredi posodobljen izvor z zapolnitvijo vseh pozicij na *[0..n]*
+z ustreznimi vrednostmi glede na *h'*.
+
+
 
 
 ___
 **Primerjava**
 
-Za par enostavnih *get* funkcij smo primerjali računsko zahtevnost avtomatsko zgeneriranih in na roke zapisanih *put* funkcij in rezultate narisali v obliki naslednjih grafov.
+Za par enostavnih *get* funkcij smo primerjali računsko zahtevnost avtomatsko zgeneriranih in na roke zapisanih *put* funkcij. Rezultate smo predstavili v obliki naslednjih grafov.
 
 ...
 
