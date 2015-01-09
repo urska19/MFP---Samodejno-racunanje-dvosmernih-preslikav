@@ -75,7 +75,21 @@ ___
 
 Za par enostavnih *get* funkcij smo primerjali računsko zahtevnost avtomatsko zgeneriranih in na roke zapisanih *put* funkcij. Rezultate smo predstavili v obliki naslednjih grafov.
 
-...
+Prvi graf prikazuje računsko zahtevnost avtomatsko zapisane *put* funkcije (*bff polovička*) in na roke zapisano *put* (*put_1*) za *get* funkcijo *polovička*. 
+
+![alt tag](https://raw.githubusercontent.com/urska19/MFP---Samodejno-racunanje-dvosmernih-preslikav/master/halve1.jpg)
+
+Drugi graf prikazuje računsko zahtevnost avtomatsko zapisane *put* funkcije (*bff zbrisiDvojnike*) in na roke zapisano *put* za get funkcijo *zbrisiDvojnike*, ki iz seznama pobriše ponavljajoče se elemente.
+V tem primeru originalen izvor ni imel ponavljajočih se elementov.
+
+![alt tag](https://raw.githubusercontent.com/urska19/MFP---Samodejno-racunanje-dvosmernih-preslikav/master/rmdups_all_different_elts1.jpg)
+
+Tretji graf prikazuje računsko zahtevnost avtomatsko zapisane *put* funkcije (*bff zbrisiDvojnike*) in na roke zapisano *put* za get funkcijo *zbrisiDvojnike*, ki iz seznama pobriše ponavljajoče se elemente.
+V tem primeru je imel originalen izvor vsak element ponovljen dvakrat.
+
+![alt tag](https://raw.githubusercontent.com/urska19/MFP---Samodejno-racunanje-dvosmernih-preslikav/master/rmdups_every_elt_is_duplicated1.jpg)
+
+V vseh primerih vidimo, da je časovna zahtevnost avtomatske *put* funkcije višja od *put* funkcije, ki smo jo napisali na roke. Lahko rečemo, da je cena avtomatizacije dvosmernih preslikav višja računska zahtevnost.
 
 ___
 **Vir**
