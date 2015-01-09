@@ -1,3 +1,14 @@
+{-|
+Module      : IntMapEq
+Description : Bidirectionalization
+Copyright   : (c) Urska, 2015;
+		  Melanija, 2015
+License     : GPL-3
+
+Stability   : experimental
+
+-- A variant of the regular 'Data.IntMap'.
+-}
 module IntMapEq
 	(IntMapEq,
 	empty, 
