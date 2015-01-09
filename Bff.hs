@@ -1,3 +1,15 @@
+{-|
+Module      : Bff
+Description : Bidirectionalization
+Copyright   : (c) Urska, 2015;
+		  Melanija, 2015
+License     : GPL-3
+
+Stability   : experimental
+
+-- Bff module contains automatic bidirectionalizer (by the article Bidirectionalization for Free!, Janis Voigtlaender).
+-}
+
 {-# OPTIONS_GHC -XRank2Types #-}
 
 module Bff where
@@ -19,7 +31,9 @@ import Data.Traversable
 import Data.Foldable
 import Zippable
 
---bff
+
+-- | bff, given a polymorphic get function, source and updated view, returns  
+--   an updated view into the updated source (automatically produces corresponding put).
 bff :: (Traversable k, Zippable k', Foldable k') => (forall a. k a -> k' a) -> (forall a. Eq a => k a -> k' a -> k a)	
 bff get = \s v ->
   let (s', g) = template s
@@ -54,7 +68,8 @@ checkInsert x y m = case IntMap.lookup x m of
 				      then Right m 
 				      else Left "Update violates equality."
 							      
---bff_Eq
+
+-- | Similar as bff function, but can also handle get functions that compare the elements.
 bff_Eq :: (Traversable k, Zippable k', Foldable k') => (forall a. Eq a => k a -> k' a) -> (forall a. Eq a => k a -> k' a -> k a)
 bff_Eq get = \s v ->
    let (s',g) = template_Eq s
@@ -79,7 +94,8 @@ assoc_Eq = makeAssoc IntMapEq.checkInsert IntMapEq.empty
   
 
 
---bff_Ord
+-- | Similar as bff function, but can also handle get functions that compare the elements
+--  using 'Ord' typeclass.
 bff_Ord :: (Traversable k, Zippable k', Foldable k') => (forall a. Ord a => k a -> k' a) -> (forall a. Ord a => k a -> k' a -> k a)
 bff_Ord get = \s v ->
    let (s',g) = template_Ord s
