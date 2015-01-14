@@ -1,9 +1,22 @@
+{-|
+Description : spellchecker
+Copyright   : (c) Urska, 2015;
+		          Melanija, 2015
+License     : GPL-3
+
+Stability   : experimental
+
+-- A simple example of slovenian spellchecker. It only corrects the mistake in which the last letter of the word is missing.
+-}
+
 import Bff
 import Data.List.Split 
 
 
-slovar = ["dan", "danes", "je", "lep"]
-stavek = "dane je le da"
+slovar = ["bo", "dan", "danes", "je", "jutri", "lep", "tudi"]
+stavek = "dane j le da" -- vsem besedam manjka zadnja crka
+--stavek = "danes je le da" -- zadnjim dvem besedam manjka zadnja crka
+--stavek = "jutri bo tudi lep dan"
 
 besede = splitOn " " stavek
 
