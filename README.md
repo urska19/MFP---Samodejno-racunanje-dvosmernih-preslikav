@@ -47,14 +47,14 @@ Dobro definiran par *get/put* funkcij mora zadoščati naslednjima pogojema:
 Kako se lahko *bff* funkcija nauči kaj uporabnega iz vhodne *get* funkcije in 
 izkoriti pridobljene informacije za sproduciranje dobre *put* funkcije?
 
-Najprej omenimo, da mora biti *get* funkcija naj bo polimorfna, tako je njeno obnašanje odvisno le od 
+Najprej omenimo, da mora biti *get* funkcija polimorfna, tako je njeno obnašanje odvisno le od 
 pozicije elementov in ne od njihove konkretne vrednosti.
 
 
 V grobem *bff* deluje na naslednji način
 (*bff* dobi za vhod get funkcijo, originalen izvor *s* in posodobljeno sliko *v*):
 
-- Vzame *s*, naredi predlogo *s' = [0..n]*, če *n = length(s)*, in asociacijo *g*, med 
+- Vzame *s*, naredi predlogo *s' = [0..n]*, če *n+1 = length s*, in asociacijo *g*, med 
 ustreznimi vrednostmi iz *s'* in *s*.
 
 - Zažene *get* na *s'*, dobi predlogo slike *v'* in sproducira asociacijo *h* med *v'* in *v*.
