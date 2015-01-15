@@ -92,6 +92,11 @@ V tem primeru je imel originalen izvor vsak element ponovljen dvakrat.
 V vseh primerih vidimo, da je časovna zahtevnost avtomatske *put* funkcije višja od *put* funkcije, ki smo jo napisali na roke. Lahko rečemo, da je cena avtomatizacije dvosmernih preslikav višja računska zahtevnost.
 
 ___
+**Opomba**
+
+Datoteke v mapi *Control* so del Haskell paketa category-extras. Pri nalaganju tega paketa je bilo nekaj težav, zato smo tisti del, ki smo ga potrebovali dali v naš repozitorij, da ne bi bilo problemov pri namestitvi programa.
+
+___
 **Vir**
 
 [Članek o avtomatskem računanju dvosmernih preslikav] (http://www.janis-voigtlaender.eu/papers/BidirectionalizationForFree.pdf)
