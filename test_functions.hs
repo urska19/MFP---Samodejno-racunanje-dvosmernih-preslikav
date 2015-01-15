@@ -14,7 +14,7 @@ import Bff
 import Data.List 
 import Data.Maybe (fromJust)
  
--- |Simple tree type.
+-- | Simple tree type.
 data Tree a = Leaf a | Node (Tree a) (Tree a)
 
 -- | Flatens tree data type into list.
