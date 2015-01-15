@@ -21,11 +21,6 @@ stavek2 = "dane j le da!" -- vsem besedam manjka zadnja crka, ni velike zacetnic
 stavek3 = "danes je le da" -- zadnjim dvem besedam manjka zadnja crka, ni velike zacetnice in locila
 stavek4 = "Jutri b tud le da" -- je velika zacetnica, na koncu stavka ni locila
 
-besede1 = splitOn " " stavek1
-besede2 = splitOn " " stavek2
-besede3 = splitOn " " stavek3
-besede4 = splitOn " " stavek4
-
 
 -- | Prejme besedo in ji odstrani zadnjo crko.
 get :: [a] -> [a] 
@@ -39,8 +34,8 @@ najdiPravoBesedo beseda (x:xs) =  if (take ((length x) - 1) x) == beseda
 									else najdiPravoBesedo beseda xs
 									
 -- | Crkovalnik
-popraviStavek :: [[Char]] -> [Char]
-popraviStavek seznamBesed = popraviStavek2 seznamBesed "" 1
+popraviStavek :: [Char] -> [Char]
+popraviStavek stavek = 	popraviStavek2 (splitOn " " stavek) "" 1
 
 popraviStavek2 :: [[Char]] -> [Char] -> Int -> [Char]
 popraviStavek2 [x] acc _ = if isLetter (head (drop ((length x) - 1) x))
